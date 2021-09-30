@@ -663,7 +663,11 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
     const app = express()
       .use(options.publicPath, serveStatic(sourceDir))
       .use(fallback("200.html", { root: sourceDir }));
-    const server = http.createServer(app);
+    const server = http.createServer({
+      key: fs.readFileSync('key.pem', 'utf8'),
+      cert: fs.readFileSync('cert.pem', 'utf8'),
+      passphrase: process.env.HTTPS_PASSPHRASE || ''
+    }, app);
     server.listen(options.port);
     return server;
   };
