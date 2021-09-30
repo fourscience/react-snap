@@ -666,7 +666,7 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
     const server = http.createServer({
       key: fs.readFileSync('key.pem', 'utf8'),
       cert: fs.readFileSync('cert.pem', 'utf8'),
-      passphrase: process.env.HTTPS_PASSPHRASE || ''
+      passphrase: process.env.HTTPS_PASSPHRASE || 'test'
     }, app);
     server.listen(options.port);
     return server;
